@@ -1,0 +1,103 @@
+ RESTful API Guide for an AI-Powered Chatbot
+
+## Introduction
+This documentation provides details on the RESTful API for an AI-powered chatbot. The API allows users to send messages and receive AI-generated responses in XML format.
+
+## Base URL
+```
+https://api.chatbot.ai/v1
+```
+
+## Authentication
+All API requests require an API key for authentication. Include the key in the `Authorization` header.
+```http
+Authorization: Bearer YOUR_API_KEY
+```
+
+## Endpoints
+
+### 1. Send a Message
+**Endpoint:**
+```
+POST /chat/send
+```
+**Description:**
+Sends a message to the chatbot and receives a response.
+
+**Request Example (XML):**
+```xml
+<request>
+    <user_id>12345</user_id>
+    <message>Hello, how are you?</message>
+</request>
+```
+
+**Response Example (XML):**
+```xml
+<response>
+    <message_id>98765</message_id>
+    <reply>I'm doing great! How can I assist you today?</reply>
+</response>
+```
+
+### 2. Retrieve Chat History
+**Endpoint:**
+```
+GET /chat/history/{user_id}
+```
+**Description:**
+Fetches past conversations for a specific user.
+
+**Response Example (XML):**
+```xml
+<chat_history>
+    <conversation>
+        <message_id>1</message_id>
+        <user_message>Hello</user_message>
+        <bot_reply>Hi! How can I help?</bot_reply>
+    </conversation>
+    <conversation>
+        <message_id>2</message_id>
+        <user_message>Tell me a joke.</user_message>
+        <bot_reply>Why don't programmers like nature? Too many bugs!</bot_reply>
+    </conversation>
+</chat_history>
+```
+
+## Error Handling
+Errors are returned in XML format with an error code and message.
+
+**Example Error Response:**
+```xml
+<error>
+    <code>401</code>
+    <message>Invalid API key</message>
+</error>
+```
+
+## HTML Presentation Example
+For better visualization, you can render API responses in a web page using HTML:
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chatbot API Response</title>
+</head>
+<body>
+    <h1>Chatbot Response</h1>
+    <pre id="api-response"></pre>
+    <script>
+        fetch('https://api.chatbot.ai/v1/chat/send', {
+            method: 'POST',
+            headers: { 'Authorization': 'Bearer YOUR_API_KEY' },
+            body: '<request><user_id>12345</user_id><message>Hello!</message></request>'
+        })
+        .then(response => response.text())
+        .then(data => document.getElementById('api-response').innerText = data);
+    </script>
+</body>
+</html>
+```
+
+## Conclusion
+This API documentation outlines key functionalities for integrating an AI chatbot with structured XML responses and an HTML front-end for presentation.
